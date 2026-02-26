@@ -1,21 +1,15 @@
-/*
-UC1:PalindromeCheckerApp
-@author Rithwik
-@version 1.0
- */
-import java.util.Scanner;
+
 public class PalindromeCheckerApp {
     public static void main(String[] args){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Input text: ");
-        String name = sc.nextLine();
-        boolean isPalindrome = true;
-        for(int i=0;i<name.length()/2;i++){
-            if(name.charAt(i)!=name.charAt(name.length()-1-i)){
-                isPalindrome=false;
-                break;
-            }
+    String name="madam";
+    String reverse="";
+    for(int i=name.length()-1;i>=0;i--){
+            reverse=reverse+name.charAt(i);
         }
-        System.out.print("Is it a Palindrome? : "+isPalindrome);
+    boolean ispalindrome=name.equals(reverse);
+    System.out.println("Input text : "+name);
+        System.out.println("Reversed text : "+reverse);
+        System.out.print("Is it a Palindrome? : "+ ispalindrome);
+
     }
 }
