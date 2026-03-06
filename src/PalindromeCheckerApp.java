@@ -2,54 +2,42 @@ import java.util.Deque;
 import java.util.ArrayDeque;
 import java.util.LinkedList;
 import  java.util.Scanner;
+import java.util.Stack;
 public class PalindromeCheckerApp {
-    // Method to normalize string
-    public static String normalize(String str) {
+    public static void main(String[] args){
 
-        // Convert to lowercase
-        str = str.toLowerCase();
+        String input = "level";
 
-        // Remove spaces using regular expression
-        str = str.replaceAll("\\s+", "");
+        PalindromeStrategy strategy = new StackStrategy();
 
-        return str;
+        boolean result = strategy.check(input);
+
+        System.out.println("Input : " + input);
+        System.out.println("Is Palindrome? : " + result);
     }
+}
 
-    // Method to check palindrome (iterative approach)
-    public static boolean isPalindrome(String str) {
+interface PalindromeStrategy {
+    boolean check(String input);
+}
 
-        int left = 0;
-        int right = str.length() - 1;
+class StackStrategy implements PalindromeStrategy {
 
-        while (left < right) {
-            if (str.charAt(left) != str.charAt(right)) {
+    public boolean check(String input) {
+
+        Stack<Character> stack = new Stack<>();
+
+        for (char c : input.toCharArray()) {
+            stack.push(c);
+        }
+
+        for (char c : input.toCharArray()) {
+            if (c != stack.pop()) {
                 return false;
             }
-            left++;
-            right--;
         }
 
         return true;
-    }
-
-    public static void main(String[] args){
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("=== Case-Insensitive & Space-Ignored Palindrome Checker ===");
-        System.out.print("Enter a string: ");
-        String input = scanner.nextLine();
-
-        // Step 1: Normalize string
-        String processed = normalize(input);
-
-        // Step 2: Apply palindrome logic
-        if (isPalindrome(processed)) {
-            System.out.println("Result: The string is a Palindrome.");
-        } else {
-            System.out.println("Result: The string is NOT a Palindrome.");
-        }
-
-        scanner.close();
     }
 }
 
