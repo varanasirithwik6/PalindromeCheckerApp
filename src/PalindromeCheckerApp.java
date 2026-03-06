@@ -40,4 +40,3 @@ class StackStrategy implements PalindromeStrategy {
         return true;
     }
 }
-
