@@ -1,61 +1,42 @@
-import java.util.Scanner;
+import java.util.Deque;
+import java.util.ArrayDeque;
+import java.util.LinkedList;
+import  java.util.Scanner;
+import java.util.Stack;
+public class PalindromeCheckerApp {
+    public static void main(String[] args){
 
-class PalindromeChecker {
+        String input = "level";
 
-    // Encapsulated method: does all palindrome work internally
-    public boolean checkPalindrome(String input) {
+        PalindromeStrategy strategy = new StackStrategy();
 
-        if (input == null) return false;
+        boolean result = strategy.check(input);
 
-        // Preprocess: ignore spaces + case (common requirement)
-        String normalized = normalize(input);
-
-        // Internal data structure: Array (char array)
-        char[] arr = normalized.toCharArray();
-
-        int left = 0;
-        int right = arr.length - 1;
-
-        while (left < right) {
-            if (arr[left] != arr[right]) {
-                return false;
-            }
-            left++;
-            right--;
-        }
-
-        return true;
-    }
-
-    // Private helper (encapsulation): not visible outside the class
-    private String normalize(String str) {
-        // Lowercase + remove spaces
-        return str.toLowerCase().replaceAll("\\s+", "");
+        System.out.println("Input : " + input);
+        System.out.println("Is Palindrome? : " + result);
     }
 }
 
-public class PalindromeCheckerApp {
+interface PalindromeStrategy {
+    boolean check(String input);
+}
 
-    public static void main(String[] args) {
+class StackStrategy implements PalindromeStrategy {
 
-        Scanner sc = new Scanner(System.in);
+    public boolean check(String input) {
 
-        System.out.println("=== UC11: Object-Oriented Palindrome Service ===");
-        System.out.print("Enter a string: ");
-        String input = sc.nextLine();
+        Stack<Character> stack = new Stack<>();
 
-        // Create service object
-        PalindromeChecker checker = new PalindromeChecker();
-
-        // Call the service method
-        boolean result = checker.checkPalindrome(input);
-
-        if (result) {
-            System.out.println("Result: The string is a Palindrome.");
-        } else {
-            System.out.println("Result: The string is NOT a Palindrome.");
+        for (char c : input.toCharArray()) {
+            stack.push(c);
         }
 
-        sc.close();
+        for (char c : input.toCharArray()) {
+            if (c != stack.pop()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
