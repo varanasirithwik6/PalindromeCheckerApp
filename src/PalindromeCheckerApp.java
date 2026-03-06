@@ -3,29 +3,47 @@ import java.util.ArrayDeque;
 import java.util.LinkedList;
 import  java.util.Scanner;
 public class PalindromeCheckerApp {
-    // Recursive function to check palindrome
-    public static boolean isPalindrome(String str, int start, int end) {
+    // Method to normalize string
+    public static String normalize(String str) {
 
-        if (start >= end) {
-            return true;
-        }
+        // Convert to lowercase
+        str = str.toLowerCase();
 
-        if (str.charAt(start) != str.charAt(end)) {
-            return false;
-        }
+        // Remove spaces using regular expression
+        str = str.replaceAll("\\s+", "");
 
-        return isPalindrome(str, start + 1, end - 1);
+        return str;
     }
+
+    // Method to check palindrome (iterative approach)
+    public static boolean isPalindrome(String str) {
+
+        int left = 0;
+        int right = str.length() - 1;
+
+        while (left < right) {
+            if (str.charAt(left) != str.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+
+        return true;
+    }
+
     public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("=== Recursive Palindrome Checker ===");
+        System.out.println("=== Case-Insensitive & Space-Ignored Palindrome Checker ===");
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        boolean result = isPalindrome(input, 0, input.length() - 1);
+        // Step 1: Normalize string
+        String processed = normalize(input);
 
-        if (result) {
+        // Step 2: Apply palindrome logic
+        if (isPalindrome(processed)) {
             System.out.println("Result: The string is a Palindrome.");
         } else {
             System.out.println("Result: The string is NOT a Palindrome.");
