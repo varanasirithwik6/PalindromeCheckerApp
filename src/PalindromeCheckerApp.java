@@ -1,28 +1,23 @@
-import java.util.Deque;
-import java.util.ArrayDeque;
-import java.util.LinkedList;
-import  java.util.Scanner;
-public class PalindromeCheckerApp {
-    // Method to normalize string
-    public static String normalize(String str) {
+import java.util.Scanner;
 
-        // Convert to lowercase
-        str = str.toLowerCase();
+class PalindromeChecker {
 
-        // Remove spaces using regular expression
-        str = str.replaceAll("\\s+", "");
+    // Encapsulated method: does all palindrome work internally
+    public boolean checkPalindrome(String input) {
 
-        return str;
-    }
+        if (input == null) return false;
 
-    // Method to check palindrome (iterative approach)
-    public static boolean isPalindrome(String str) {
+        // Preprocess: ignore spaces + case (common requirement)
+        String normalized = normalize(input);
+
+        // Internal data structure: Array (char array)
+        char[] arr = normalized.toCharArray();
 
         int left = 0;
-        int right = str.length() - 1;
+        int right = arr.length - 1;
 
         while (left < right) {
-            if (str.charAt(left) != str.charAt(right)) {
+            if (arr[left] != arr[right]) {
                 return false;
             }
             left++;
@@ -32,24 +27,35 @@ public class PalindromeCheckerApp {
         return true;
     }
 
-    public static void main(String[] args){
-        Scanner scanner = new Scanner(System.in);
+    // Private helper (encapsulation): not visible outside the class
+    private String normalize(String str) {
+        // Lowercase + remove spaces
+        return str.toLowerCase().replaceAll("\\s+", "");
+    }
+}
 
-        System.out.println("=== Case-Insensitive & Space-Ignored Palindrome Checker ===");
+public class PalindromeCheckerApp {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("=== UC11: Object-Oriented Palindrome Service ===");
         System.out.print("Enter a string: ");
-        String input = scanner.nextLine();
+        String input = sc.nextLine();
 
-        // Step 1: Normalize string
-        String processed = normalize(input);
+        // Create service object
+        PalindromeChecker checker = new PalindromeChecker();
 
-        // Step 2: Apply palindrome logic
-        if (isPalindrome(processed)) {
+        // Call the service method
+        boolean result = checker.checkPalindrome(input);
+
+        if (result) {
             System.out.println("Result: The string is a Palindrome.");
         } else {
             System.out.println("Result: The string is NOT a Palindrome.");
         }
 
-        scanner.close();
+        sc.close();
     }
 }
-
